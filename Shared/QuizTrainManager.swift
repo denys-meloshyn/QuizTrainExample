@@ -267,33 +267,34 @@ extension QuizTrainManager {
             print("Plan creation skipped. There are no results to submit.")
             return
         }
-        let newPlan = NewPlan(description: "Created with QuizTrain - https://github.com/venmo/QuizTrain", entries: newPlanEntries, name: "QuizTrain Test Results")
-        var plan: Plan!
-        group.enter()
-        objectAPI.addPlan(newPlan, to: project.project) { (outcome) in
-            switch outcome {
-            case .failure(let error):
-                print("Plan creation failed: \(error.debugDescription)")
-                return
-            case .success(let aPlan):
-                plan = aPlan
-            }
-            group.leave()
-        }
-        group.wait()
-        print("Plan creation completed. \(plan.url)")
-
-        guard let planEntries = plan.entries, planEntries.count > 0 else {
-            print("Aborting: There are no entries in the plan: \(String(describing: plan))")
-            return
-        }
+//        let newPlan = NewPlan(description: "Created with QuizTrain - https://github.com/venmo/QuizTrain", entries: newPlanEntries, name: "QuizTrain Test Results")
+//        var plan: Plan!
+//        group.enter()
+//        objectAPI.addPlan(newPlan, to: project.project) { (outcome) in
+//            switch outcome {
+//            case .failure(let error):
+//                print("Plan creation failed: \(error.debugDescription)")
+//                return
+//            case .success(let aPlan):
+//                plan = aPlan
+//            }
+//            group.leave()
+//        }
+//        group.wait()
+//        print("Plan creation completed. \(plan.url)")
+//
+//        guard let planEntries = plan.entries, planEntries.count > 0 else {
+//            print("Aborting: There are no entries in the plan: \(String(describing: plan))")
+//            return
+//        }
 
         // Submit results.
         print("Submitting \(validResults.count) test results started.")
         var errors = [ObjectAPI.AddError]()
-        var results = [QuizTrain.Result]()
-        for planEntry in planEntries {
-            for run in planEntry.runs {
+//        var results = [QuizTrain.Result]()
+        var resultsRun = [Run]()
+        for planEntry in newPlanEntries {
+            for run in planEntry.runs ?? [] {
 
                 // Include results in this Run.
                 let casesInRun = cases.filter { $0.suiteId == run.suiteId } // We detect the run a case belongs in using the suiteId.
@@ -310,18 +311,27 @@ extension QuizTrainManager {
                     continue // TestRail will return an error if you submit zero results for a run.
                 }
 
-                let newCaseResults = NewCaseResults(results: resultsForRun)
-
+//                let newCaseResults = NewCaseResults(results: resultsForRun)
+                let newRun = NewRun(assignedtoId: run.assignedtoId, caseIds: caseIdsInRun, description: run.description, includeAll: run.includeAll, milestoneId: run.milestoneId, name: run.name ?? "", suiteId: run.suiteId)
                 group.enter()
-                objectAPI.addResultsForCases(newCaseResults, to: run) { (outcome) in
-                    switch outcome {
-                    case .failure(let error):
-                        errors.append(error)
-                    case .success(let someResults):
-                        results.append(contentsOf: someResults)
-                    }
-                    group.leave()
+                objectAPI.addRun(newRun, to: project.project) { (outcome) in
+                        switch outcome {
+                        case .failure(let error):
+                            errors.append(error)
+                        case .success(let someResults):
+                            resultsRun.append(someResults)
+                        }
+                        group.leave()
                 }
+//                objectAPI.addResultsForCases(newCaseResults, to: run) { (outcome) in
+//                    switch outcome {
+//                    case .failure(let error):
+//                        errors.append(error)
+//                    case .success(let someResults):
+//                        results.append(contentsOf: someResults)
+//                    }
+//                    group.leave()
+//                }
             }
         }
         group.wait()
@@ -334,23 +344,23 @@ extension QuizTrainManager {
             return
         }
 
-        print("Submitting \(results.count) test results completed.")
+        print("Submitting \(resultsRun.count) test results completed.")
 
-        if closePlan {
-            print("Closing plan started.")
-            group.enter()
-            objectAPI.closePlan(plan) { (outcome) in
-                switch outcome {
-                case .failure(let error):
-                    print("Closing plan failed: \(error)")
-                case .success(_):
-                    break
-                }
-                group.leave()
-            }
-            group.wait()
-            print("Closing plan completed.")
-        }
+//        if closePlan {
+//            print("Closing plan started.")
+//            group.enter()
+//            objectAPI.closePlan(plan) { (outcome) in
+//                switch outcome {
+//                case .failure(let error):
+//                    print("Closing plan failed: \(error)")
+//                case .success(_):
+//                    break
+//                }
+//                group.leave()
+//            }
+//            group.wait()
+//            print("Closing plan completed.")
+//        }
     }
 
 }
