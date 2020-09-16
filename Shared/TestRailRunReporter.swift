@@ -11,7 +11,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
     private let suiteID: Suite.Id
     private var completed = [NewCaseResults.Result]()
     
-    init(suiteID: Suite.Id) {
+    public init(suiteID: Suite.Id) {
         self.suiteID = suiteID
     }
 
