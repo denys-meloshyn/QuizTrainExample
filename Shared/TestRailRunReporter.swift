@@ -5,7 +5,7 @@
 import Foundation
 import QuizTrain
 
-class TestRailRunReporter: TestRailReporterProtocol {
+public class TestRailRunReporter: TestRailReporterProtocol {
     internal var objectAPI: ObjectAPI!
     internal var project: QuizTrainProject!
     private let suiteID: Suite.Id
