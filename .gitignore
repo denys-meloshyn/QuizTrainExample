@@ -3,3 +3,4 @@ xcuserdata/
 *.pbxuser
 *.xcworkspace
 Carthage/Build
+.build

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0C3CFCDA4B28E742EEB830 /* TestRailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C3B0F783E2D80C0C451BA /* TestRailManager.swift */; };
+		5B0C3DF71CD0AFEB7B133BA0 /* TestRailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C3B0F783E2D80C0C451BA /* TestRailManager.swift */; };
 		FEA1D07A20895A77009C8341 /* QuizTrain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FED7AF92207EA38D00169889 /* QuizTrain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FEA1D07C20895A86009C8341 /* QuizTrain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FED7AF92207EA38D00169889 /* QuizTrain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FED7AF34207EA0F400169889 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7AF33207EA0F400169889 /* AppDelegate.swift */; };
@@ -118,6 +120,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B0C3B0F783E2D80C0C451BA /* TestRailManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRailManager.swift; sourceTree = "<group>"; };
 		FED7AF30207EA0F400169889 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FED7AF33207EA0F400169889 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FED7AF35207EA0F400169889 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +238,7 @@
 				FED7AF72207EA22600169889 /* QuizTrainManager.swift */,
 				FED7AF74207EA22600169889 /* QuizTrainProject.swift */,
 				FED7AF71207EA22600169889 /* XCTContextExtensions.swift */,
+				5B0C3B0F783E2D80C0C451BA /* TestRailManager.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -469,6 +473,7 @@
 				FED7AF7B207EA22700169889 /* QuizTrainProject.swift in Sources */,
 				FED7AF77207EA22700169889 /* QuizTrainManager.swift in Sources */,
 				FED7AF79207EA22700169889 /* TestManager.swift in Sources */,
+				5B0C3DF71CD0AFEB7B133BA0 /* TestRailManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +486,7 @@
 				FED7AF7C207EA22700169889 /* QuizTrainProject.swift in Sources */,
 				FED7AF78207EA22700169889 /* QuizTrainManager.swift in Sources */,
 				FED7AF7A207EA22700169889 /* TestManager.swift in Sources */,
+				5B0C3CFCDA4B28E742EEB830 /* TestRailManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

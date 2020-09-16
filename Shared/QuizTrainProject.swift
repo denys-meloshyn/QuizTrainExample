@@ -1,7 +1,7 @@
 import QuizTrain
 import Foundation
 
-struct QuizTrainProject {
+public struct QuizTrainProject {
 
     // MARK: - Properties
 

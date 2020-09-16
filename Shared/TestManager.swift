@@ -10,20 +10,20 @@ import XCTest
  */
 public final class TestManager: NSObject {
 
-    let quizTrainManager: QuizTrainManager
+    let quizTrainManager: TestRailManager
 
     /*
      username: "YOUR@TESTRAIL.EMAIL"
      secret: "YOUR_TESTRAIL_PASSWORD_OR_API_KEY"
      hostname: "YOURINSTANCE.testrail.net"
      */
-    public init(username: String, secret: String, hostname: String, projectId: Int, port: Int = 443, scheme: String = "https") {
+    public init(username: String, secret: String, hostname: String, projectId: Int, port: Int = 443, scheme: String = "https", testRailReporter: TestRailReporterProtocol) {
         print("\n========== TestManager ==========\n")
         defer { print("\n====================================\n") }
 
         print("QuizTrainManager setup started.")
         let objectAPI = QuizTrain.ObjectAPI(username: username, secret: secret, hostname: hostname, port: port, scheme: scheme)
-        var quizTrainManager: QuizTrainManager!
+        var quizTrainManager: TestRailManager!
         let group = DispatchGroup()
         group.enter()
         DispatchQueue.global().async {
@@ -33,7 +33,9 @@ public final class TestManager: NSObject {
                     print("QuizTrainManager setup failed: \(error)")
                     fatalError(error.localizedDescription)
                 case .success(let project):
-                    quizTrainManager = QuizTrainManager(objectAPI: objectAPI, project: project)
+                    testRailReporter.objectAPI = objectAPI
+                    testRailReporter.project = project
+                    quizTrainManager = TestRailManager(objectAPI: objectAPI, project: project, testRailReporter: testRailReporter)
                 }
                 group.leave()
             }
@@ -89,11 +91,11 @@ public final class TestManager: NSObject {
         quizTrainManager.startTesting(caseIds)
     }
 
-    public func completeTesting(_ caseIds: [Case.Id], withResultIfUntested result: QuizTrainManager.Result = .passed, comment: String? = nil) {
+    public func completeTesting(_ caseIds: [Case.Id], withResultIfUntested result: TestRailManager.Result = .passed, comment: String? = nil) {
         quizTrainManager.completeTesting(caseIds, withResultIfUntested: result, comment: comment)
     }
 
-    public func completeTesting(_ caseIds: Case.Id..., withResultIfUntested result: QuizTrainManager.Result = .passed, comment: String? = nil) {
+    public func completeTesting(_ caseIds: Case.Id..., withResultIfUntested result: TestRailManager.Result = .passed, comment: String? = nil) {
         quizTrainManager.completeTesting(caseIds, withResultIfUntested: result, comment: comment)
     }
     
@@ -151,10 +153,10 @@ func startTesting(_ caseIds: Case.Id...) {
     TestManager.sharedInstance.quizTrainManager.startTesting(caseIds)
 }
 
-func completeTesting(_ caseIds: [Case.Id], withResultIfUntested result: QuizTrainManager.Result = .passed, comment: String? = nil) {
+func completeTesting(_ caseIds: [Case.Id], withResultIfUntested result: TestRailManager.Result = .passed, comment: String? = nil) {
     TestManager.sharedInstance.quizTrainManager.completeTesting(caseIds, withResultIfUntested: result, comment: comment)
 }
 
-func completeTesting(_ caseIds: Case.Id..., withResultIfUntested result: QuizTrainManager.Result = .passed, comment: String? = nil) {
+func completeTesting(_ caseIds: Case.Id..., withResultIfUntested result: TestRailManager.Result = .passed, comment: String? = nil) {
     TestManager.sharedInstance.quizTrainManager.completeTesting(caseIds, withResultIfUntested: result, comment: comment)
 }
