@@ -6,8 +6,8 @@ import Foundation
 import QuizTrain
 
 public class TestRailRunReporter: TestRailReporterProtocol {
-    internal var objectAPI: ObjectAPI!
-    internal var project: QuizTrainProject!
+    public var objectAPI: ObjectAPI!
+    public var project: QuizTrainProject!
     private let suiteID: Suite.Id
     private var completed = [NewCaseResults.Result]()
     
@@ -15,7 +15,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         self.suiteID = suiteID
     }
 
-    func submitResultsToTestRail(includingAllCases: Bool, closingPlanAfterSubmittingResults closePlan: Bool) {
+    public func submitResultsToTestRail(includingAllCases: Bool, closingPlanAfterSubmittingResults closePlan: Bool) {
         // Filter valid/invalid results.
         let (validResults, invalidResults) = splitResults(completed, project)
         if invalidResults.isEmpty == false {
