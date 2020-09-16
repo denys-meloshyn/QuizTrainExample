@@ -192,6 +192,7 @@ extension TestRailManager: XCTestObservation {
 
         print("\n========== QuizTrainManager ==========\n")
         if submitResults {
+            testRailReporter.completed = completed
             testRailReporter.submitResultsToTestRail(includingAllCases: includeAllCasesInPlan, closingPlanAfterSubmittingResults: closePlanAfterSubmittingResults) // blocking
         } else {
             print("Submitting results is disabled.")

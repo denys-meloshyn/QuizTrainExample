@@ -5,6 +5,7 @@ import QuizTrain
 public protocol TestRailReporterProtocol: class {
     var objectAPI: ObjectAPI! { set get }
     var project: QuizTrainProject! { set get }
+    var completed: [NewCaseResults.Result] { set get }
     func submitResultsToTestRail(includingAllCases: Bool, closingPlanAfterSubmittingResults closePlan: Bool)
 }
 
