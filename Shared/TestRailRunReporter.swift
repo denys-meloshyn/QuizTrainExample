@@ -88,7 +88,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         var errors = [ObjectAPI.AddError]()
         var resultsRun = [Run]()
 
-        let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: nil, milestoneId: nil, name: name, suiteId: suiteID)
+        let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: includingAllCases, milestoneId: nil, name: name, suiteId: suiteID)
         var responseRun: Run?
         group.enter()
         objectAPI.addRun(newRun, to: project.project) { (outcome) in
