@@ -9,9 +9,11 @@ public class TestRailRunReporter: TestRailReporterProtocol {
     public var objectAPI: ObjectAPI!
     public var project: QuizTrainProject!
     private let suiteID: Suite.Id
+    var name: String
     public var completed = [NewCaseResults.Result]()
     
-    public init(suiteID: Suite.Id) {
+    public init(suiteID: Suite.Id, name: String) {
+        self.name = name
         self.suiteID = suiteID
     }
 
@@ -86,7 +88,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         var errors = [ObjectAPI.AddError]()
         var resultsRun = [Run]()
 
-        let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: nil, milestoneId: nil, name: "test", suiteId: suiteID)
+        let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: nil, milestoneId: nil, name: name, suiteId: suiteID)
         var responseRun: Run?
         group.enter()
         objectAPI.addRun(newRun, to: project.project) { (outcome) in
