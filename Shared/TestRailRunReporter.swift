@@ -16,6 +16,20 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         self.name = name
         self.suiteID = suiteID
     }
+    
+    public func runNameFormatter(appName: String, device: String, osVersion: String, branchName: String?, buildNumber: String?, commit: String?) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return [appName,
+                      "iOS",
+                      "\(device) (\(osVersion))",
+                      branchName,
+                      buildNumber,
+                      commit,
+                dateFormatter.string(from: Date())]
+                .compactMap { $0  }
+                .joined(separator: " - ")
+    }
 
     public func submitResultsToTestRail(includingAllCases: Bool, closingPlanAfterSubmittingResults closePlan: Bool) {
         // Filter valid/invalid results.
