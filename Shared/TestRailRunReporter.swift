@@ -9,7 +9,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
     public var objectAPI: ObjectAPI!
     public var project: QuizTrainProject!
     private let suiteID: Suite.Id
-    var name: String
+    public var name: String
     public var completed = [NewCaseResults.Result]()
     
     public init(suiteID: Suite.Id, name: String) {
