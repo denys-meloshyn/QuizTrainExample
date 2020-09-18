@@ -17,7 +17,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         self.suiteID = suiteID
     }
     
-    public func runNameFormatter(appName: String, device: String, osVersion: String, branchName: String?, buildNumber: String?, commit: String?) -> String {
+    public static func runNameFormatter(appName: String, device: String, osVersion: String, branchName: String?, buildNumber: String?, commit: String?) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return [appName,
