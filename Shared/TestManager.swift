@@ -10,7 +10,7 @@ import XCTest
  */
 public final class TestManager: NSObject {
 
-    let quizTrainManager: TestRailManager
+    public let quizTrainManager: TestRailManager
 
     /*
      username: "YOUR@TESTRAIL.EMAIL"

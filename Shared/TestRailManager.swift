@@ -10,6 +10,7 @@ public final class TestRailManager: NSObject {
     var submitResults = true
     var closePlanAfterSubmittingResults = true
     var includeAllCasesInPlan = false
+    public var testBundleDidFinish1: ((Bundle) -> Void)?
 
     init(objectAPI: ObjectAPI, project: QuizTrainProject, testRailReporter: TestRailReporterProtocol) {
         self.objectAPI = objectAPI
@@ -161,6 +162,7 @@ public final class TestRailManager: NSObject {
 extension TestRailManager: XCTestObservation {
 
     public func testBundleWillStart(_ testBundle: Bundle) {
+        testBundleDidFinish1?(testBundle)
         completeAllTests()
     }
 
@@ -188,6 +190,7 @@ extension TestRailManager: XCTestObservation {
         completeAllTests()
     }
     public func testBundleDidFinish(_ testBundle: Bundle) {
+        testBundleDidFinish1?(testBundle)
         completeAllTests()
 
         print("\n========== QuizTrainManager ==========\n")

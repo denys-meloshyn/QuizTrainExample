@@ -10,6 +10,7 @@ public class TestRailRunReporter: TestRailReporterProtocol {
     public var project: QuizTrainProject!
     private let suiteID: Suite.Id
     public var name: String
+    public var nameProperties = [String: String]()
     public var completed = [NewCaseResults.Result]()
     
     public init(suiteID: Suite.Id, name: String) {
@@ -101,6 +102,17 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         print("Submitting \(validResults.count) test results started.")
         var errors = [ObjectAPI.AddError]()
         var resultsRun = [Run]()
+        
+        let testRailBranchName = nameProperties["testRailBranchName"]
+        let testRailGitCommit = nameProperties["testRailGitCommit"]
+        let testRailBuildNumber = nameProperties["testRailBuildNumber"]
+        let testRailAppTitle = nameProperties["testRailAppTitle"]
+        let name = TestRailRunReporter.runNameFormatter(appName: testRailAppTitle ?? "",
+                                                        device: "iPhone",
+                                                        osVersion: "14",
+                                                        branchName: testRailBranchName,
+                                                        buildNumber: testRailBuildNumber,
+                                                        commit: testRailGitCommit)
 
         let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: includingAllCases, milestoneId: nil, name: name, suiteId: suiteID)
         var responseRun: Run?
