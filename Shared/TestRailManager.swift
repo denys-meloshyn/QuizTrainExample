@@ -7,12 +7,20 @@ public final class TestRailManager: NSObject {
     let project: QuizTrainProject
     let testRailReporter: TestRailReporterProtocol
 
-    var submitResults = true
-    var closePlanAfterSubmittingResults = true
-    var includeAllCasesInPlan = false
-    public var testBundleDidFinish1: ((Bundle) -> Void)?
+    var submitResults: Bool
+    var closePlanAfterSubmittingResults: Bool
+    var includeAllCasesInPlan: Bool
+    public var runName: ((Bundle) -> String)?
 
-    init(objectAPI: ObjectAPI, project: QuizTrainProject, testRailReporter: TestRailReporterProtocol) {
+    init(objectAPI: ObjectAPI,
+         project: QuizTrainProject,
+         testRailReporter: TestRailReporterProtocol,
+         submitResults: Bool = true,
+         closePlanAfterSubmittingResults: Bool = true,
+         includeAllCasesInPlan: Bool = false) {
+        self.submitResults = submitResults
+        self.closePlanAfterSubmittingResults = closePlanAfterSubmittingResults
+        self.includeAllCasesInPlan = includeAllCasesInPlan
         self.objectAPI = objectAPI
         self.project = project
         self.testRailReporter = testRailReporter
@@ -162,7 +170,6 @@ public final class TestRailManager: NSObject {
 extension TestRailManager: XCTestObservation {
 
     public func testBundleWillStart(_ testBundle: Bundle) {
-        testBundleDidFinish1?(testBundle)
         completeAllTests()
     }
 
@@ -190,7 +197,7 @@ extension TestRailManager: XCTestObservation {
         completeAllTests()
     }
     public func testBundleDidFinish(_ testBundle: Bundle) {
-        testBundleDidFinish1?(testBundle)
+        testRailReporter.testBundleDidFinish(testBundle)
         completeAllTests()
 
         print("\n========== QuizTrainManager ==========\n")

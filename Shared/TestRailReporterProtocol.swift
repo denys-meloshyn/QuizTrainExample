@@ -7,6 +7,8 @@ public protocol TestRailReporterProtocol: class {
     var project: QuizTrainProject! { set get }
     var completed: [NewCaseResults.Result] { set get }
     func submitResultsToTestRail(includingAllCases: Bool, closingPlanAfterSubmittingResults closePlan: Bool)
+    
+    func testBundleDidFinish(_ testBundle: Bundle)
 }
 
 extension TestRailReporterProtocol {

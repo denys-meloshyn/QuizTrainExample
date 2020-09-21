@@ -9,13 +9,22 @@ public class TestRailRunReporter: TestRailReporterProtocol {
     public var objectAPI: ObjectAPI!
     public var project: QuizTrainProject!
     private let suiteID: Suite.Id
-    public var name: String
-    public var nameProperties = [String: String]()
     public var completed = [NewCaseResults.Result]()
     
-    public init(suiteID: Suite.Id, name: String) {
-        self.name = name
+    var name = "Test Rail"
+    var runName: ((Bundle) -> String)?
+    
+    public init(suiteID: Suite.Id, runName: ((Bundle) -> String)?) {
         self.suiteID = suiteID
+        self.runName = runName
+    }
+    
+    public func testBundleDidFinish(_ testBundle: Bundle) {
+        guard let newName = runName?(testBundle) else {
+            return
+        }
+        
+        name = newName
     }
     
     public static func runNameFormatter(appName: String, device: String, osVersion: String, branchName: String?, buildNumber: String?, commit: String?) -> String {
@@ -103,16 +112,12 @@ public class TestRailRunReporter: TestRailReporterProtocol {
         var errors = [ObjectAPI.AddError]()
         var resultsRun = [Run]()
         
-        let testRailBranchName = nameProperties["testRailBranchName"]
-        let testRailGitCommit = nameProperties["testRailGitCommit"]
-        let testRailBuildNumber = nameProperties["testRailBuildNumber"]
-        let testRailAppTitle = nameProperties["testRailAppTitle"]
-        let name = TestRailRunReporter.runNameFormatter(appName: testRailAppTitle ?? "",
-                                                        device: "iPhone",
-                                                        osVersion: "14",
-                                                        branchName: testRailBranchName,
-                                                        buildNumber: testRailBuildNumber,
-                                                        commit: testRailGitCommit)
+//        let name = TestRailRunReporter.runNameFormatter(appName: testRailAppTitle,
+//                                                        device: "iPhone",
+//                                                        osVersion: "14",
+//                                                        branchName: testRailBranchName,
+//                                                        buildNumber: testRailBuildNumber,
+//                                                        commit: testRailGitCommit)
 
         let newRun = NewRun(assignedtoId: assignedto.id, caseIds: validCaseIds, description: nil, includeAll: includingAllCases, milestoneId: nil, name: name, suiteId: suiteID)
         var responseRun: Run?
